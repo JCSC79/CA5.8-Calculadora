@@ -1,32 +1,43 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
+import java.util.ArrayList;
 
+/**
+ * Clase principal que implementa una calculadora gráfica avanzada.
+ * Permite realizar operaciones matemáticas como suma, resta, multiplicación, división y potencia.
+ * Además, incluye un historial de cálculos realizados.
+ */
 public class Calculadora {
     public static void main(String[] args) {
-        // Crear la ventana principal
-        JFrame frame = new JFrame("Calculadora Básica - 4 Operaciones");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(450, 300);
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null); // Centrar la ventana
+        // Crear la ventana principal de la aplicación
+        JFrame frame = new JFrame("Calculadora");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cerrar la aplicación al salir
+        frame.setSize(500, 400); // Tamaño fijo de la ventana
+        frame.setResizable(false); // Evitar que el usuario cambie el tamaño de la ventana
+        frame.setLocationRelativeTo(null); // Centrar la ventana en la pantalla
 
-        // Panel principal con BoxLayout vertical
+        // Panel principal: organiza los sub-paneles verticalmente
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS)); // Diseño vertical
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15)); // Márgenes internos
 
-        // Panel de entrada: contiene dos campos para números y selección de la operación
-        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        JLabel labelNum1 = new JLabel("Número 1:");
-        JTextField textFieldNum1 = new JTextField();
-        JLabel labelNum2 = new JLabel("Número 2:");
-        JTextField textFieldNum2 = new JTextField();
-        JLabel labelOper = new JLabel("Operación:");
-        // Opciones de operaciones disponibles
-        String[] operaciones = { "Suma", "Resta", "Multiplicación", "División" };
+        /**
+         * Panel de entrada:
+         * Contiene dos campos de texto para ingresar números y un JComboBox para seleccionar la operación.
+         */
+        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10)); // Diseño en cuadrícula
+        JLabel labelNum1 = new JLabel("Número 1:"); // Etiqueta para el primer número
+        JTextField textFieldNum1 = new JTextField(); // Campo de texto para el primer número
+        JLabel labelNum2 = new JLabel("Número 2:"); // Etiqueta para el segundo número
+        JTextField textFieldNum2 = new JTextField(); // Campo de texto para el segundo número
+        JLabel labelOper = new JLabel("Operación:"); // Etiqueta para seleccionar la operación
+
+        // Lista desplegable con las operaciones disponibles (suma, resta, multiplicación, división y potencia)
+        String[] operaciones = { "Suma", "Resta", "Multiplicación", "División", "Potencia" };
         JComboBox<String> operCombo = new JComboBox<>(operaciones);
 
+        // Agregar los componentes al panel de entrada
         inputPanel.add(labelNum1);
         inputPanel.add(textFieldNum1);
         inputPanel.add(labelNum2);
@@ -34,43 +45,77 @@ public class Calculadora {
         inputPanel.add(labelOper);
         inputPanel.add(operCombo);
 
-        // Panel de botones: "Calcular" y "Limpiar"
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        JButton clearButton = new JButton("Limpiar");
-        JButton calculateButton = new JButton("Calcular");
-        buttonPanel.add(clearButton);
+        /**
+         * Panel de botones:
+         * Contiene los botones "Calcular" y "Limpiar".
+         */
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10)); // Diseño centrado
+        JButton calculateButton = new JButton("Calcular"); // Botón para realizar la operación seleccionada
+        JButton clearButton = new JButton("Limpiar"); // Botón para limpiar los campos y restablecer valores
         buttonPanel.add(calculateButton);
-        
+        buttonPanel.add(clearButton);
 
-        // Panel de salida: muestra el resultado de la operación
-        JPanel outputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel resultLabel = new JLabel("Resultado: ");
-        resultLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        /**
+         * Panel de salida:
+         * Muestra el resultado de la operación seleccionada.
+         */
+        JPanel outputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // Diseño centrado
+        JLabel resultLabel = new JLabel("Resultado: "); // Etiqueta para mostrar el resultado
+        resultLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Fuente más grande y en negrita
         outputPanel.add(resultLabel);
 
-        // Agregar los sub-paneles al panel principal
+        /**
+         * Panel del historial:
+         * Muestra un área de texto donde se guarda el historial de cálculos realizados.
+         */
+        JPanel historyPanel = new JPanel(new BorderLayout()); // Diseño con bordes (para organizar mejor)
+        JLabel historyLabel = new JLabel("Historial:");
+        JTextArea historyArea = new JTextArea(5, 40); // Área de texto para mostrar el historial
+        historyArea.setEditable(false); // Solo lectura (el usuario no puede modificarlo directamente)
+        
+        JScrollPane scrollPane = new JScrollPane(historyArea); // Scroll para manejar muchos cálculos en el historial
+        
+        historyPanel.add(historyLabel, BorderLayout.NORTH); // Etiqueta en la parte superior del panel
+        historyPanel.add(scrollPane, BorderLayout.CENTER); // Área de texto dentro del panel
+
+        /**
+         * Agregar todos los sub-paneles al panel principal:
+         * Esto organiza visualmente los elementos en la ventana.
+         */
         mainPanel.add(inputPanel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Espaciado vertical
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Espaciado vertical entre paneles
         mainPanel.add(buttonPanel);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Espaciado vertical
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Espaciado vertical entre paneles
         mainPanel.add(outputPanel);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Espaciado vertical entre paneles
+        mainPanel.add(historyPanel);
 
-        // Agregar el panel principal a la ventana y hacerla visible
-        frame.add(mainPanel);
-        frame.setVisible(true);
+        frame.add(mainPanel); // Agregar el panel principal a la ventana
+        frame.setVisible(true); // Hacer visible la ventana
 
-        // Controlador de eventos para el botón "Calcular"
+        /**
+         * Lista para almacenar el historial de cálculos realizados.
+         */
+        ArrayList<String> historial = new ArrayList<>();
+
+        /**
+         * Controlador del botón "Calcular":
+         * Realiza la operación seleccionada por el usuario y muestra el resultado.
+         */
         calculateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    // Obtener y convertir los números ingresados
-                    double num1 = Double.parseDouble(textFieldNum1.getText());
-                    double num2 = Double.parseDouble(textFieldNum2.getText());
-                    String oper = (String) operCombo.getSelectedItem();
-                    double resultado = 0;
+                    double num1 = Double.parseDouble(textFieldNum1.getText()); // Obtener primer número ingresado
+                    double num2 = Double.parseDouble(textFieldNum2.getText()); // Obtener segundo número ingresado
+                    String oper = (String) operCombo.getSelectedItem();       // Operación seleccionada por el usuario
+                    
+                    double resultado = 0;                                    // Variable para almacenar el resultado
 
-                    // Realizar la operación según la selección del usuario
+                    /**
+                     * Realizar la operación matemática según lo seleccionado por el usuario:
+                     * - Validar división por cero en caso necesario.
+                     */
                     switch (oper) {
                         case "Suma":
                             resultado = num1 + num2;
@@ -82,32 +127,47 @@ public class Calculadora {
                             resultado = num1 * num2;
                             break;
                         case "División":
-                            // Validar división por cero
-                            if (num2 == 0) {
-                                JOptionPane.showMessageDialog(frame, "Error: División entre cero no permitida.", "Error", JOptionPane.ERROR_MESSAGE);
-                                return;
+                            if (num2 == 0) { 
+                                JOptionPane.showMessageDialog(frame,
+                                    "Error: División entre cero no permitida.",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                                return; 
                             }
                             resultado = num1 / num2;
                             break;
+                        case "Potencia":
+                            resultado = Math.pow(num1, num2); 
+                            break;
                     }
-                    // Mostrar el resultado en la etiqueta
-                    resultLabel.setText("Resultado: " + resultado);
+
+                    resultLabel.setText("Resultado: " + resultado); 
+
+                    /**
+                     * Guardar el cálculo realizado en el historial.
+                     */
+                    historial.add(num1 + " " + oper + " " + num2 + " = " + resultado);
+                    historyArea.setText(String.join("\n", historial)); 
                 } catch (NumberFormatException ex) {
-                    // Manejo de error para entrada inválida
-                    JOptionPane.showMessageDialog(frame, "Por favor, ingrese números válidos.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame,
+                        "Por favor, ingrese números válidos.",
+                        "Error de entrada",
+                        JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
-        // Controlador de eventos para el botón "Limpiar"
+        /**
+         * Controlador del botón "Limpiar":
+         * Restablece los campos de entrada y limpia los resultados mostrados.
+         */
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Limpiar los campos de texto, restablecer el JComboBox y la etiqueta de resultado
-                textFieldNum1.setText("");
-                textFieldNum2.setText("");
-                operCombo.setSelectedIndex(0);
-                resultLabel.setText("Resultado: ");
+                textFieldNum1.setText(""); 
+                textFieldNum2.setText(""); 
+                operCombo.setSelectedIndex(0); 
+                resultLabel.setText("Resultado: "); 
             }
         });
     }
