@@ -1,13 +1,12 @@
-import javax.swing.SwingUtilities;
 /**
- * Clase principal que implementa una calculadora avanzada con operaciones adicionales.
+ * Clase que implementa una calculadora simple con operaciones básicas.
  */
-public class Calculadora extends CalculadoraBase {
-    public Calculadora(String title) {
+public class CalculadoraSimple extends CalculadoraBase {
+    public CalculadoraSimple(String title) {
         super(title);
 
-        String[] operacionesAvanzadas = { "Suma", "Resta", "Multiplicación", "División", "Potencia" };
-        for (String operacion : operacionesAvanzadas) {
+        String[] operacionesBasicas = { "Suma", "Resta", "Multiplicación", "División" };
+        for (String operacion : operacionesBasicas) {
             operCombo.addItem(operacion);
         }
 
@@ -34,9 +33,6 @@ public class Calculadora extends CalculadoraBase {
                         }
                         resultado = num1 / num2;
                         break;
-                    case "Potencia":
-                        resultado = Math.pow(num1, num2);
-                        break;
                 }
 
                 resultLabel.setText("Resultado: " + resultado);
@@ -49,12 +45,5 @@ public class Calculadora extends CalculadoraBase {
         });
 
         clearButton.addActionListener(e -> limpiar());
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            Calculadora calculadoraAvanzada = new Calculadora("Calculadora Avanzada");
-            calculadoraAvanzada.setVisible(true);
-        });
     }
 }
