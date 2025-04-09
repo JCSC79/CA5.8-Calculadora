@@ -1,3 +1,5 @@
 # Ignorar archivos compilados de Java
 *.class
+
+# Ignorar carpeta bin en cualquier nivel del proyecto
 bin/
