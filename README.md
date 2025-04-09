@@ -41,3 +41,17 @@ git clone https://github.com/JCSC79/CA5.8-Calculadora.git
 - **Validación de entrada**: Se asegura de que los valores ingresados sean números válidos.
 - **Manejo de errores**: Incluye mensajes de error para entradas inválidas y divisiones por cero.
 - **Botón de limpieza**: Permite restablecer los campos de entrada y el resultado.
+# Cumplimiento de CA7.4  
+## 1. Jerarquía de Clases  
+[Diagrama UML explicado]  
+
+## 2. Sobrescritura del Método `calcular()`  
+[Código con anotación @Override]  
+
+## 3. Evidencias  
+- Captura de la interfaz con "Potencia".  
+- Salida de consola con resultado de potencia.  
+
+## 4. Conclusión  
+"Se implementó herencia multinivel y sobrescritura para cumplir CA7.4"  
+

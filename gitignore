@@ -1,4 +1,3 @@
-ECHO est� activado.
-# Ignorar los archivos compilados de Java 
-rm *.class
+# Ignorar archivos compilados de Java
+*.class
 bin/
