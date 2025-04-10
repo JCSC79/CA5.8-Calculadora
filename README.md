@@ -55,3 +55,14 @@ git clone https://github.com/JCSC79/CA5.8-Calculadora.git
 ## 4. Conclusión  
 "Se implementó herencia multinivel y sobrescritura para cumplir CA7.4"  
 
+## Pruebas de Jerarquías (CA7.6)  
+**Método**: Pruebas manuales con una clase de pruebas (`PruebasCalculadora.java`).  
+
+**Cobertura**:  
+- Operaciones básicas (Suma, Resta, Multiplicación, División).  
+- Operación avanzada (Potencia).  
+- Manejo de errores (División por cero).  
+
+**Resultados**:  
+
+
